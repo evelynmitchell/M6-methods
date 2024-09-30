@@ -2,6 +2,7 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.2 ----
@@ -18,14 +19,14 @@ sg <- sg[sg$sid!="32cdcc24",]
 mRPS <- mean(sg$RPS) #mRPS <- median(sg$RPS)
 mIR <- mean(sg$IR) # mIR <- median(sg$IR)
 
-par(mfrow=c(2,2))
+#par(mfrow=c(2,2))
 examine_m <- sg[sg$RPS<mRPS & sg$IR>mIR,]
-plot(density(examine_m$IR-mIR, from=0), main = "IR difference - Average", xlab="")
-plot(density(mRPS-examine_m$RPS, from=0), main = "RPS difference - Average", xlab="")
+plot(density(examine_m$IR-mIR, from=0), xlab="", main="") #IR difference - Average
+plot(density(mRPS-examine_m$RPS, from=0), xlab="", main="") #RPS difference - Average
 
 examine_b <- sg[sg$RPS<bRPS & sg$IR>bIR,]
-plot(density(examine_b$IR-bIR, from=0), main = "IR difference - Benchmark", xlab="")
-plot(density(bRPS-examine_b$RPS, from=0), main = "RPS difference - Benchmark", xlab="")
+plot(density(examine_b$IR-bIR, from=0), xlab="", main="") #IR difference - Benchmark
+plot(density(bRPS-examine_b$RPS, from=0), xlab="", main="") #RPS difference - Benchmark
 
 #Statistics
 nrow(examine_m)

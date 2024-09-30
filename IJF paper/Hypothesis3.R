@@ -2,6 +2,7 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.3 ----
@@ -21,7 +22,7 @@ tmp$OR <- (tmp$R_RPS+tmp$R_IR)/2
 #Top percentage of top teams based on IR!!! 
 tmp <- tmp[order(-tmp$IR),]
 
-par(mfrow=c(1,2))
+#par(mfrow=c(1,2))
 sg <- score_summary[score_summary$pid=="Global",]
 benchmark <- sg[sg$sid=="32cdcc24",]
 sg <- sg[sg$RPS!=0.16,]

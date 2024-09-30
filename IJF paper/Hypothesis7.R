@@ -2,7 +2,7 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 
-setwd("C:/Users/vangelis spil/Google Drive/M6 submission platform/GitHub")
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.7
@@ -44,7 +44,7 @@ for (pid_c in c(1:12)){
   
   pid = unique(submission_data$Evaluation)[pid_c]
   hist_data <- asset_data[asset_data$date>=sub_period_info[sub_period_info$sub_period_name==pid,]$sub_period_start &
-                                asset_data$date<=sub_period_info[sub_period_info$sub_period_name==pid,]$sub_period_end,]
+                            asset_data$date<=sub_period_info[sub_period_info$sub_period_name==pid,]$sub_period_end,]
   
   #Handle DRE
   if (length(unique(hist_data$symbol))==99){
@@ -145,29 +145,70 @@ merged[is.na(merged$C_Rank3),]$C_Rank3 <- "(0,0.05]"
 merged[is.na(merged$C_Rank4),]$C_Rank4 <- "(0,0.05]"
 merged[is.na(merged$C_Rank5),]$C_Rank5 <- "(0,0.05]"
 
-#Rank 1
-r1 <- ddply(merged[,c("C_Rank1","P_Rank1","Rank1")], .(C_Rank1), colwise(mean))
-r2 <- ddply(merged[,c("C_Rank2","P_Rank2","Rank2")], .(C_Rank2), colwise(mean))
-r3 <- ddply(merged[,c("C_Rank3","P_Rank3","Rank3")], .(C_Rank3), colwise(mean))
-r4 <- ddply(merged[,c("C_Rank4","P_Rank4","Rank4")], .(C_Rank4), colwise(mean))
-r5 <- ddply(merged[,c("C_Rank5","P_Rank5","Rank5")], .(C_Rank5), colwise(mean))
-colnames(r1)[1] = colnames(r2)[1] = colnames(r3)[1] = colnames(r4)[1] = colnames(r5)[1] <- "C_Rank"
+#Results per rank
+# r1 <- ddply(merged[,c("C_Rank1","P_Rank1","Rank1")], .(C_Rank1), colwise(mean))
+# r2 <- ddply(merged[,c("C_Rank2","P_Rank2","Rank2")], .(C_Rank2), colwise(mean))
+# r3 <- ddply(merged[,c("C_Rank3","P_Rank3","Rank3")], .(C_Rank3), colwise(mean))
+# r4 <- ddply(merged[,c("C_Rank4","P_Rank4","Rank4")], .(C_Rank4), colwise(mean))
+# r5 <- ddply(merged[,c("C_Rank5","P_Rank5","Rank5")], .(C_Rank5), colwise(mean))
+# colnames(r1)[1] = colnames(r2)[1] = colnames(r3)[1] = colnames(r4)[1] = colnames(r5)[1] <- "C_Rank"
+# 
+# par(mfrow=c(2,3))
+# plot(r1$P_Rank1, r1$Rank1, type="l", ylim=c(0,1), xlim=c(0,1))
+# plot(r2$P_Rank2, r2$Rank2, type="l", ylim=c(0,1), xlim=c(0,1))
+# plot(r3$P_Rank3, r3$Rank3, type="l", ylim=c(0,1), xlim=c(0,1))
+# plot(r4$P_Rank4, r4$Rank4, type="l", ylim=c(0,1), xlim=c(0,1))
+# plot(r5$P_Rank5, r5$Rank5, type="l", ylim=c(0,1), xlim=c(0,1))
 
-par(mfrow=c(2,3))
-plot(r1$P_Rank1, r1$Rank1, type="l", ylim=c(0,1), xlim=c(0,1))
-plot(r2$P_Rank2, r2$Rank2, type="l", ylim=c(0,1), xlim=c(0,1))
-plot(r3$P_Rank3, r3$Rank3, type="l", ylim=c(0,1), xlim=c(0,1))
-plot(r4$P_Rank4, r4$Rank4, type="l", ylim=c(0,1), xlim=c(0,1))
-plot(r5$P_Rank5, r5$Rank5, type="l", ylim=c(0,1), xlim=c(0,1))
+# r <- merge(r1, r2, by="C_Rank",all = TRUE)
+# r <- merge(r, r3, by="C_Rank",all = TRUE)
+# r <- merge(r, r4, by="C_Rank",all = TRUE)
+# r <- merge(r, r5, by="C_Rank",all = TRUE)
+# rcomplete <- r
+# r$P_Rank <- rowMeans(r[,c("P_Rank1","P_Rank2","P_Rank3","P_Rank4","P_Rank5")], na.rm = TRUE)
+# r$Rank <- rowMeans(r[,c("Rank1","Rank2","Rank3","Rank4","Rank5")], na.rm = TRUE)
+# 
+# plot(r$P_Rank, r$Rank, type="b", col="blue",
+#      ylim=c(0,1), xlim=c(0,1), ylab="Relative Frequency", xlab="Assessed Probability")
+# lines(seq(0,1,0.1),seq(0,1,0.1), lty=2)
+# legend("topleft", legend=c("Actual performance", "Perfect calibration"), col=c("blue","black"), cex=0.9, lty=c(1,2), pch=c(1,NA))
 
-r <- merge(r1, r2, by="C_Rank",all = TRUE)
-r <- merge(r, r3, by="C_Rank",all = TRUE)
-r <- merge(r, r4, by="C_Rank",all = TRUE)
-r <- merge(r, r5, by="C_Rank",all = TRUE)
-r$P_Rank <- rowMeans(r[,c("P_Rank1","P_Rank2","P_Rank3","P_Rank4","P_Rank5")], na.rm = TRUE)
-r$Rank <- rowMeans(r[,c("Rank1","Rank2","Rank3","Rank4","Rank5")], na.rm = TRUE)
+levels <- c("(0,0.05]", "(0.05,0.1]", "(0.1,0.15]", "(0.15,0.2]", 
+            "(0.2,0.25]","(0.25,0.3]", "(0.3,0.35]", "(0.35,0.4]", 
+            "(0.4,0.45]", "(0.45,0.5]", "(0.5,0.55]", "(0.55,0.6]", 
+            "(0.6,0.65]", "(0.65,0.7]", "(0.7,0.75]", "(0.75,0.8]", 
+            "(0.8,0.85]", "(0.85,0.9]", "(0.9,0.95]", "(0.95,1]")
+lid <- levels[3]
+to_bars <- NULL
+for (lid in levels){
+  tmp1 <- c(merged[merged$C_Rank1==lid,]$P_Rank1,
+           merged[merged$C_Rank2==lid,]$P_Rank2,
+           merged[merged$C_Rank3==lid,]$P_Rank3,
+           merged[merged$C_Rank4==lid,]$P_Rank4,
+           merged[merged$C_Rank5==lid,]$P_Rank5)
+  tmp2 <- c(merged[merged$C_Rank1==lid,]$Rank1,
+            merged[merged$C_Rank2==lid,]$Rank2,
+            merged[merged$C_Rank3==lid,]$Rank3,
+            merged[merged$C_Rank4==lid,]$Rank4,
+            merged[merged$C_Rank5==lid,]$Rank5)
+  tmp <- data.frame(lid, mean(tmp1), sd(tmp1), mean(tmp2), sd(tmp2), length(tmp1))
+  to_bars <- rbind(to_bars, tmp)
+}
+colnames(to_bars) <- c("level","mean_p", "sd_p", "mean_r", "sd_r", "sample")
 
-par(mfrow=c(1,1))
-plot(r$P_Rank, r$Rank, type="b", col="blue",
-     ylim=c(0,1), xlim=c(0,1), ylab="Relative Frequency", xlab="Accessed Probability")
-lines(seq(0,1,0.1),seq(0,1,0.1))
+plot(to_bars$mean_p, to_bars$mean_r, type="b", col="blue",
+     ylim=c(0,1), xlim=c(0,1), ylab="Relative Frequency", xlab="Assessed Probability")
+lines(seq(0,1,0.1),seq(0,1,0.1), lty=2)
+points(to_bars$mean_p[c(15:18,20)], to_bars$mean_r[c(15:18,20)], col="red", pch=16)
+points(to_bars$mean_p[c(1:14,19)], to_bars$mean_r[c(1:14,19)], col="darkgreen", pch=16)
+legend("topleft", legend=c("Actual performance", "Perfect calibration", 
+                           "Statistical significant deviation from diagonal", "Statistical insignificant deviation from diagonal"), 
+       col=c("blue","black", "red", "darkgreen"), cex=1, lty=c(1,2,NA,NA), pch=c(1,NA,16,16),bty = "n")
+# y <- to_bars$mean_r ; y.sd <- to_bars$sd_r
+# x <- to_bars$mean_p ; x.sd <- to_bars$sd_p
+# arrows(y0=y-y.sd, y1=y+y.sd, x0=x, code=3, angle=90, length=0.1)
+
+
+
+counts <- to_bars$sample ; names(counts) <- levels
+barplot(counts, las=2)

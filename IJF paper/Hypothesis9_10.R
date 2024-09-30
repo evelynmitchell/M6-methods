@@ -1,5 +1,6 @@
 library(tidyverse)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 data <- read_csv("performance_vs_answers_unique.csv")
 n <- dim(data)[1]
 

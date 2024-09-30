@@ -131,6 +131,7 @@ IR_calculation <- function(hist_data, submission){
   
 }
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.8
@@ -353,7 +354,7 @@ bench <- ss[ss$sid=="32cdcc24",]
 ss <- ss[ss$sid!="32cdcc24",]
 ss <- ss[ss$RPS!=0.16,]
 
-par(mfrow=c(1,2))
+#par(mfrow=c(1,2))
 #RPS
 plot(xs*100,score_total1$RPS, type="b", ylab = "RPS", xlab = "Percentage of top performing teams (%)", 
      col="black", ylim=c(0.155,0.165))
@@ -363,7 +364,7 @@ abline(h=bench$RPS, col="blue")
 abline(h=min(ss$RPS), col="purple")
 
 legend("topright", legend=c("Best", "Benchmark", "Based on OR", "Based on RPS"),
-       col=c("purple", "blue", "black", "darkgreen"), lty=1, cex=0.8)
+       col=c("purple", "blue", "black", "darkgreen"), lty=1, cex=0.8, pch = c(NA, NA, 16, 1))
 
 #IR
 plot(xs*100,score_total1$IR, type="b", ylab = "IR", xlab = "Percentage of top performing teams (%)", 
@@ -374,4 +375,4 @@ abline(h=bench$IR, col="blue")
 abline(h=max(ss$IR), col="purple")
 
 legend("topright", legend=c("Best", "Benchmark", "Based on OR", "Based on IR"),
-       col=c("purple", "blue", "black", "darkgreen"), lty=1, cex=0.8)
+       col=c("purple", "blue", "black", "darkgreen"), lty=1, cex=0.8, pch = c(NA, NA, 16, 1))

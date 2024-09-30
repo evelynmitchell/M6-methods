@@ -2,8 +2,8 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 library(ggplot2)
-library(ggpubr)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.5 ----
@@ -124,16 +124,16 @@ results <- data.frame(unique(sg$sid), num_strategies, num_changes, num_sig_chang
 colnames(results) <- c("sid","strategies","changes","sig_changes","IR")
 results_top <- head(results[order(-results$IR),],15)
 
-par(mfrow=c(1,2))
+#par(mfrow=c(1,2))
 plot(results$changes, results$IR, 
      xlab="Number of startegy changes", ylab="IR",
-     ylim=c(-32,32), main="All teams")
+     ylim=c(-32,32), main="") #All teams
 abline(lm(results$IR ~ results$changes), col="red")
 legend("topright", legend=paste0("r=",round(cor(results$IR, results$changes),2)), col="red", cex=0.9)
 
 plot(results_top$changes, results_top$IR, 
      xlab="Number of startegy changes", ylab="IR",
-     ylim=c(-32,32), main="Top 15 teams")
+     ylim=c(-32,32), main="") #Top 15 teams
 abline(lm(results_top$IR ~ results_top$changes), col="red")
 legend("bottomright", legend=paste0("r=",round(cor(results_top$IR, results_top$changes),2)), col="red", cex=0.9)
 
@@ -148,13 +148,11 @@ toplot$C4 <- factor(round(toplot$C4,0), labels =c("Single","Both"))
 toplot <- merge(toplot,sg[,c("sid","IR")], by="sid")
 toplot <- head(toplot[order(-toplot$IR),],30)
 
-p1 <- ggplot(toplot, aes(x=C1, y=IR)) + geom_boxplot() + ggtitle("Exposure") + xlab("") +
+ggplot(toplot, aes(x=C1, y=IR)) + geom_boxplot() + xlab("") + #Exposure
   stat_summary(fun=mean, geom="point", shape=16, size=1.5, color="red") + theme_bw()
-p2 <- ggplot(toplot, aes(x=C2, y=IR)) + geom_boxplot() + ggtitle("Diversification") + xlab("") +
+ggplot(toplot, aes(x=C2, y=IR)) + geom_boxplot() + xlab("") + #Diversification
   stat_summary(fun=mean, geom="point", shape=16, size=1.5, color="red") + theme_bw()
-p3 <- ggplot(toplot, aes(x=C3, y=IR)) + geom_boxplot() + ggtitle("Investment weight range") + xlab("") +
+ggplot(toplot, aes(x=C3, y=IR)) + geom_boxplot() + xlab("") + #Investment weight range
   stat_summary(fun=mean, geom="point", shape=16, size=1.5, color="red") + theme_bw()
-p4 <- ggplot(toplot, aes(x=C4, y=IR)) + geom_boxplot() + ggtitle("Investment direction") + xlab("") +
+ggplot(toplot, aes(x=C4, y=IR)) + geom_boxplot() + xlab("") + #Investment direction
   stat_summary(fun=mean, geom="point", shape=16, size=1.5, color="red") + theme_bw()
-ggarrange(p1, p2, p3, p4,
-          ncol = 2, nrow = 2)

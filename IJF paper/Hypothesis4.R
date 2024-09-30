@@ -94,6 +94,7 @@ RPS_calculation2 <- function(hist_data, submission){
   
 }
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 #Select teams in global leaderboard
@@ -221,24 +222,24 @@ colnames(scores) <- c("Team","Cor","High","Moderate","Low")
 scores$Team <- eligible
 
 #Top tn
-par(mfrow=c(2,2))
+#par(mfrow=c(2,2))
 tn <- 15
 x <- head(scores[,c("High","Moderate","Low")],tn)
-boxplot(x, ylab="Average Weight", main=paste0("IR"), ylim=c(0,0.02))
+boxplot(x, ylab="Average Weight", main="", ylim=c(0,0.02)) #IR
 
 connection <- read.csv("connection for H4.csv")
 #Well connected - 39
 wc_t <- na.omit(connection[connection$class=="Well Connected",]$id)
 x <- head(scores[scores$Team %in% wc_t, c("High","Moderate","Low")],tn)
-boxplot(x, ylab="Average Weight", main=paste0("Well Connected  - Correlation"), ylim=c(0,0.02))
+boxplot(x, ylab="Average Weight", main="", ylim=c(0,0.02)) #Well Connected  - Correlation
 
 #Connected - 20
 c_t <- na.omit(connection[connection$class=="Connected",]$id)
 x <- head(scores[scores$Team %in% c_t, c("High","Moderate","Low")],tn)
-boxplot(x, ylab="Average Weight", main=paste0("Connected - Correlation"), ylim=c(0,0.02))
+boxplot(x, ylab="Average Weight", main="", ylim=c(0,0.02)) #Connected - Correlation
 
 connection2 <- read.csv("performance_vs_answers_unique.csv")
 #Connected according to questionnaire - 63
 c_q <- na.omit(connection2[connection2$Related=="X",]$id)
 x <- head(scores[scores$Team %in% c_q, c("High","Moderate","Low")],tn)
-boxplot(x, ylab="Average Weight", main=paste0("Connected - Statement"), ylim=c(0,0.02))
+boxplot(x, ylab="Average Weight", main="", ylim=c(0,0.02)) #Connected - Statement

@@ -2,6 +2,7 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 
@@ -34,18 +35,18 @@ for (pt in seq(0.1,1,0.05)){
 }
 
 
-par(mfrow=c(2,2))
+#par(mfrow=c(2,2))
 plot(seq(0.1,1,0.05)*100,ir_ret, xlab = "Percentage of top performing teams (%)", 
      ylab = "Correlation",
-     main="IR versus Returns", ylim=c(-1,1))
+     main="", ylim=c(-1,1)) #IR versus Returns
 abline(h=0, lty=2)
 plot(seq(0.1,1,0.05)*100,ir_risk, xlab = "Percentage of top performing teams (%)", 
      ylab = "Correlation",
-     main="IR versus Risk", ylim=c(-1,1))
+     main="", ylim=c(-1,1)) # IR versus Risk
 abline(h=0, lty=2)
 plot(seq(0.1,1,0.05)*100,ret_risk, xlab = "Percentage of top performing teams (%)", 
      ylab = "Correlation",
-     main="Returns versus Risk", ylim=c(-1,1))
+     main="", ylim=c(-1,1)) #Returns versus Risk
 abline(h=0, lty=2)
 
 
@@ -58,8 +59,8 @@ Plot_ConvexHull<-function(xcoord, ycoord, lcolor){
   hpts1 <- hpts[c(5:2)]
   lines(xcoord[hpts1], ycoord[hpts1], col=lcolor)
 }  
-plot(tmp$Risk,tmp$Returns, ylab="Returns", xlab="Risk", main="Risk Curve")
-Plot_ConvexHull(tmp$Risk,tmp$Returns, lcolor = "blue")
+plot(tmp$Risk,tmp$Returns, ylab="Returns", xlab="Risk", main="") #Risk Curve
+Plot_ConvexHull(tmp$Risk,tmp$Returns, lcolor = "darkorange")
 k <- tmp[tmp$R_IR<=10,] 
 points(k$Risk, k$Returns, col="purple", pch=16)
 k <- tmp[tmp$R_IR<=5,] 

@@ -2,6 +2,7 @@ library(plyr)
 library(fGarch)
 library(corrplot)
 
+setwd("G:/My Drive/M6 submission platform/GitHub")
 load("Score compute.Rdata")
 
 ## Hypothesis No.1 ----
@@ -95,7 +96,7 @@ plot(seq(1,0.05,by=-0.05)*100,tmp_run_mean, type="p",
 lines(seq(1,0.05,by=-0.05)*100,tmp_run_median, type="p", col="red")
 abline(h=bench$IR, col="blue")
 legend("topright", legend=c("Mean", "Median", "Benchmark"),
-       col=c("red", "red", "blue"), pch=c(16,1,16), cex=0.8)
+       col=c("red", "red", "blue"), pch=c(16,1,NA), lty=c(0,0,1), cex=0.8)
 
 #Statistics summarizing the performance of the benchmark and the teams (mean and standard deviation) in terms of
 #returns, risk, and IR across the 12 submission points and in total. 
