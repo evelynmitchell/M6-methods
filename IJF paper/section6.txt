@@ -1,1 +1,1 @@
-
+Scripts starting with "s6" can be used for replicating the results presented in section 6 of the paper.
